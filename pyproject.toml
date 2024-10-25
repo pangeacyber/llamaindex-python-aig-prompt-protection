@@ -1,0 +1,40 @@
+[project]
+name = "llamaindex-dg-prompt-protection"
+version = "1.0.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "click>=8.1.7",
+    "pangea-sdk",
+    "pydantic>=2.9.2",
+    "llama-index>=0.11.19"
+]
+
+[tool.uv]
+dev-dependencies = [
+    "mypy>=1.12.0",
+    "ruff>=0.7.0",
+]
+
+[tool.uv.sources]
+pangea-sdk = { git = "https://github.com/pangeacyber/pangea-python", subdirectory = "packages/pangea-sdk", branch = "beta" }
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    # ruff defaults
+    "E4",
+    "E7",
+    "E9",
+    "F",
+
+    "I",   # isort
+    "PTH", # flake8-use-pathlib
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
