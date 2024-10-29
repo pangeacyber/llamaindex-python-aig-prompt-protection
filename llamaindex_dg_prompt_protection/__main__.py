@@ -3,15 +3,12 @@ from __future__ import annotations
 from typing import Any, override
 
 import click
-
-from pydantic import SecretStr
-from llama_index.llms.openai import OpenAI
 from llama_index.core.llms import MessageRole
+from llama_index.llms.openai import OpenAI  # type: ignore[import-untyped]
 from pangea import PangeaConfig
-from pangea.services import DataGuard
-from pangea.services import PromptGuard
+from pangea.services import DataGuard, PromptGuard
 from pangea.services.prompt_guard import Message
-
+from pydantic import SecretStr
 from pydantic_core import to_json
 
 
@@ -70,7 +67,6 @@ def main(
     openai_api_key: SecretStr,
     model: str,
 ) -> None:
-
     llm = OpenAI(model=model, api_key=openai_api_key)
 
     # Initialize the data guard and prompt guard
@@ -78,11 +74,13 @@ def main(
     prompt_guard = PromptGuard(token=prompt_guard_token.get_secret_value(), config=PangeaConfig(domain=pangea_domain))
 
     # Apply data guard to the prompt
-    data_guard_response =  data_guard.guard_text(prompt)
-    assert  data_guard_response.result
+    data_guard_response = data_guard.guard_text(prompt)
+    assert data_guard_response.result
 
     # If the prompt was redacted, use the redacted prompt
-    guarded_prompt = data_guard_response.result.redacted_prompt if data_guard_response.result.redacted_prompt else prompt
+    guarded_prompt = (
+        data_guard_response.result.redacted_prompt if data_guard_response.result.redacted_prompt else prompt
+    )
 
     # Construct chat messages from guarded prompt
     messages = [Message(role=MessageRole.USER, content=guarded_prompt)]
