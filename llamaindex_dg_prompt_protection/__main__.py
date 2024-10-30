@@ -73,7 +73,7 @@ def main(
     ai_guard = AIGuard(token=ai_guard_token.get_secret_value(), config=PangeaConfig(domain=pangea_domain))
     prompt_guard = PromptGuard(token=prompt_guard_token.get_secret_value(), config=PangeaConfig(domain=pangea_domain))
 
-    # Apply ai guard to the prompt
+    # Apply AI Guard to the prompt.
     ai_guard_response = ai_guard.guard_text(prompt)
     assert ai_guard_response.result
 
