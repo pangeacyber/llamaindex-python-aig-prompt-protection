@@ -69,7 +69,7 @@ def main(
 ) -> None:
     llm = OpenAI(model=model, api_key=openai_api_key)
 
-    # Initialize the ai guard and prompt guard
+    # Initialize AI Guard and Prompt Guard.
     ai_guard = AIGuard(token=ai_guard_token.get_secret_value(), config=PangeaConfig(domain=pangea_domain))
     prompt_guard = PromptGuard(token=prompt_guard_token.get_secret_value(), config=PangeaConfig(domain=pangea_domain))
 
