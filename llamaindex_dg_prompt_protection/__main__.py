@@ -89,12 +89,11 @@ def main(
     prompt_guard_response = prompt_guard.guard(messages)
     assert prompt_guard_response.result
 
-    # If injection was detected, raise an exception
+    # If injection was detected, output the injection, otherwise chat with the model
     if prompt_guard_response.result.detected:
-        raise Exception(to_json(prompt_guard_response.result).decode("utf-8"))
+        raise click.BadParameter(f"The prompt was detected as malicious: {to_json(prompt_guard_response.result).decode("utf-8")}")
     else:
         click.echo(llm.chat(messages))
-
 
 if __name__ == "__main__":
     main()
