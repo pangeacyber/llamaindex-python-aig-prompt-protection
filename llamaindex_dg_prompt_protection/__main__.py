@@ -67,7 +67,7 @@ def main(
     openai_api_key: SecretStr,
     model: str,
 ) -> None:
-    llm = OpenAI(model=model, api_key=openai_api_key)
+    llm = OpenAI(model=model, api_key=openai_api_key.get_secret_value())
 
     # Initialize AI Guard and Prompt Guard.
     ai_guard = AIGuard(token=ai_guard_token.get_secret_value(), config=PangeaConfig(domain=pangea_domain))
