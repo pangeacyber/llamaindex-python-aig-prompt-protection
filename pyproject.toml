@@ -1,5 +1,5 @@
 [project]
-name = "llamaindex-dg-prompt-protection"
+name = "llamaindex-aig-prompt-protection"
 version = "1.0.0"
 description = ""
 readme = "README.md"
